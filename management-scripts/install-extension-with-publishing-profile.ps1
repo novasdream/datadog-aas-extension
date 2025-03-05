@@ -12,19 +12,6 @@
     [Parameter(Mandatory=$false)][Switch]$Remove
  )
 
-$rawProfile = az webapp deployment list-publishing-profiles --name $SiteName --resource-group $ResourceGroup --output json
-
-if ([string]::IsNullOrEmpty($rawProfile) -or $rawProfile -eq "[]") {
-    Write-Output "No publishing profiles found. Exiting script."
-    Write-Output "${publishProfile}"
-    exit 1
-}
-
-$publishProfile = $rawProfile | ConvertFrom-Json
-
-$Username=$publishProfile[0].userName
-$Password=$publishProfile[0].userPWD
-
 
 $rawAllSites = az webapp list --output json
 
@@ -36,6 +23,22 @@ $allSites = $rawAllSites | ConvertFrom-Json
 				
 				$SiteName=$webapp.name
                 Write-Host "[${SiteName}] Requesting stop."
+
+
+
+                # $rawProfile = az webapp deployment list-publishing-profiles --name $SiteName --resource-group $ResourceGroup --output json
+
+                # if ([string]::IsNullOrEmpty($rawProfile) -or $rawProfile -eq "[]") {
+                #     Write-Output "No publishing profiles found. Exiting script."
+                #     Write-Output "${publishProfile}"
+                #     exit 1
+                # }
+
+                # $publishProfile = $rawProfile | ConvertFrom-Json
+
+                # $Username=$publishProfile[0].userName
+                # $Password=$publishProfile[0].userPWD
+
 			}
 
 
