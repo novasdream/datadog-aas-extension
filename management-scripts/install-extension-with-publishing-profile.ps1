@@ -1,7 +1,7 @@
  param (
     [Parameter(Mandatory=$true)][string]$SubscriptionId,
-    [Parameter(Mandatory=$true)][string]$ResourceGroup,
-    [Parameter(Mandatory=$true)][string]$SiteName,
+    # [Parameter(Mandatory=$true)][string]$ResourceGroup,
+    # [Parameter(Mandatory=$true)][string]$SiteName,
     [Parameter(Mandatory=$false)][string]$Extension="Datadog.AzureAppServices.DotNet",
     [Parameter(Mandatory=$false)][string]$DDApiKey="<not-set>",
     [Parameter(Mandatory=$false)][string]$DDSite="<not-set>",
