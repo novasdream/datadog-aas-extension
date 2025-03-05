@@ -24,12 +24,11 @@ Foreach ($webapp in @($allSites)) {
         Write-Host "Detected windows app service [${SiteName}]"
         Write-Host "Trying to install"
 
-        $rawProfile = az webapp deployment list-publishing-profiles --name $SiteName --resource-group $ResourceGroup --output json
+        $rawProfile = az webapp deployment list-publishing-profiles --name $SiteName --resource-group $webapp.resourceGroup --output json
 
         if ([string]::IsNullOrEmpty($rawProfile) -or $rawProfile -eq "[]") {
-            Write-Output "No publishing profiles found. Exiting script."
-            Write-Output "${publishProfile}"
-            exit 1
+            Write-Output "No publishing profiles found."
+            return
         }
 
         # $publishProfile = $rawProfile | ConvertFrom-Json
