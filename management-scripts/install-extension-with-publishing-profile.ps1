@@ -13,7 +13,7 @@ param (
     [Parameter(Mandatory = $false)][Switch]$Remove
 )
 
-$rawAllSites = az webapp list -g $ResourceGroup --output json
+$rawAllSites = az webapp list --subscription $SubscriptionId -g $ResourceGroup --output json
 
 $allSites = $rawAllSites | ConvertFrom-Json
 
@@ -24,18 +24,18 @@ Foreach ($webapp in @($allSites)) {
         Write-Host "Detected windows app service [${SiteName}]"
         Write-Host "Trying to install"
 
-        $rawProfile = az webapp deployment list-publishing-profiles --name $SiteName --resource-group $webapp.resourceGroup --output json
+        $rawProfile = az webapp deployment list-publishing-profiles --subscription $SubscriptionId --name $SiteName --resource-group $webapp.resourceGroup --output json
 
         if ([string]::IsNullOrEmpty($rawProfile) -or $rawProfile -eq "[]") {
             Write-Output "No publishing profiles found."
             return
         }
 
-        # $publishProfile = $rawProfile | ConvertFrom-Json
+        $publishProfile = $rawProfile | ConvertFrom-Json
 
-        # $Username = $publishProfile[0].userName
-        # $Password = $publishProfile[0].userPWD
+        $Username = $publishProfile[0].userName
+        $Password = $publishProfile[0].userPWD
 
-        # .\extension\install-latest-extension.ps1 -SubscriptionId $SubscriptionId -ResourceGroup $ResourceGroup -SiteName $SiteName -DDApiKey $DDApiKey -DDSite $DDSite
+        .\extension\install-latest-extension.ps1 -SubscriptionId $SubscriptionId -ResourceGroup $webapp.resourceGroup -SiteName $SiteName -DDApiKey $DDApiKey -DDSite $DDSite -Username $Username -Password $Password
     }
 }
