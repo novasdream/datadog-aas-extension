@@ -15,8 +15,8 @@
     [Parameter(Mandatory=$false)][string]$DDService="<not-set>",
     [Parameter(Mandatory=$false)][string]$DDVersion="<not-set>",
     [Parameter(Mandatory=$false)][string]$ExtensionVersion,
-    [Parameter(Mandatory=$false)][Switch]$Remove
-    [Parameter(Mandatory=$false)][Switch]$Remove
+    [Parameter(Mandatory=$false)][Switch]$Remove,
+    [Parameter(Mandatory=$false)][Switch]$DDAPM
  )
 
 # 
