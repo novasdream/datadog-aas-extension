@@ -16,6 +16,7 @@
     [Parameter(Mandatory=$false)][string]$DDVersion="<not-set>",
     [Parameter(Mandatory=$false)][string]$ExtensionVersion,
     [Parameter(Mandatory=$false)][Switch]$Remove
+    [Parameter(Mandatory=$false)][Switch]$Remove
  )
 
 # 
@@ -63,27 +64,32 @@ az rest -m POST --header "Accept=application/json" -u "${siteApiUrl}/stop?api-ve
 
 $skipVar="<not-set>"
 
-az webapp config appsettings set -n ${SiteName} -g ${ResourceGroup} --settings DD_AAS_SCRIPT_INSTALL=1
+az webapp config appsettings set -n ${SiteName} -g ${ResourceGroup} --settings DD_AAS_SCRIPT_INSTALL=1 | Out-Null
 	
 if ($DDApiKey -ne $skipVar) {
-	az webapp config appsettings set -n ${SiteName} -g ${ResourceGroup} --settings DD_API_KEY=$DDApiKey
+	az webapp config appsettings set -n ${SiteName} -g ${ResourceGroup} --settings DD_API_KEY=$DDApiKey | Out-Null
 }
 	
 if ($DDSite -ne $skipVar) {
-	az webapp config appsettings set -n ${SiteName} -g ${ResourceGroup} --settings DD_SITE=$DDSite
+	az webapp config appsettings set -n ${SiteName} -g ${ResourceGroup} --settings DD_SITE=$DDSite | Out-Null
 }
 
 if ($DDEnv -ne $skipVar) {
-	az webapp config appsettings set -n ${SiteName} -g ${ResourceGroup} --settings DD_ENV=$DDEnv
+	az webapp config appsettings set -n ${SiteName} -g ${ResourceGroup} --settings DD_ENV=$DDEnv | Out-Null
 }
 
 if ($DDService -ne $skipVar) {
-	az webapp config appsettings set -n ${SiteName} -g ${ResourceGroup} --settings DD_SERVICE=$DDService
+	az webapp config appsettings set -n ${SiteName} -g ${ResourceGroup} --settings DD_SERVICE=$DDService | Out-Null
 }
 
 if ($DDVersion -ne $skipVar) {
-	az webapp config appsettings set -n ${SiteName} -g ${ResourceGroup} --settings DD_VERSION=$DDVersion
+	az webapp config appsettings set -n ${SiteName} -g ${ResourceGroup} --settings DD_VERSION=$DDVersion | Out-Null
 }
+
+if ($DDAPM) {
+	az webapp config appsettings set -n ${SiteName} -g ${ResourceGroup} --settings DD_APM_INSTRUMENTATION_ENABLED=host | Out-Null
+}
+
 
 if ($Remove) {
   Write-Output "[${SiteName}] Attempting to remove ${Extension}"
