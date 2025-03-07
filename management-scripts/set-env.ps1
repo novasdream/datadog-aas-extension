@@ -2,7 +2,7 @@
 param (
     [Parameter(Mandatory = $true)][string]$SubscriptionId,
     [Parameter(Mandatory = $true)][string]$ResourceGroup,
-    [Parameter(Mandatory = $true)][string]$DDEnv
+    [Parameter(Mandatory = $true)][string]$DDEnv 
 )
 
 $rawAllSites = az webapp list --subscription $SubscriptionId -g $ResourceGroup --output json
