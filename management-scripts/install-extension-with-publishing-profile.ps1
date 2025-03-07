@@ -10,7 +10,8 @@ param (
     [Parameter(Mandatory = $false)][string]$DDService = "<not-set>",
     [Parameter(Mandatory = $false)][string]$DDVersion = "<not-set>",
     [Parameter(Mandatory = $false)][string]$ExtensionVersion,
-    [Parameter(Mandatory = $false)][Switch]$Remove
+    [Parameter(Mandatory = $false)][Switch]$Remove,
+    [Parameter(Mandatory = $false)][Switch]$DDAPM
 )
 
 $rawAllSites = az webapp list --subscription $SubscriptionId -g $ResourceGroup --output json
@@ -36,6 +37,6 @@ Foreach ($webapp in @($allSites)) {
         $Username = $publishProfile[0].userName
         $Password = $publishProfile[0].userPWD
 
-        .\extension\install-latest-extension.ps1 -SubscriptionId $SubscriptionId -ResourceGroup $webapp.resourceGroup -SiteName $SiteName -DDApiKey $DDApiKey -DDSite $DDSite -Username $Username -Password $Password -DDAPM true -DDEnv $DDEnv
+        .\extension\install-latest-extension.ps1 -SubscriptionId $SubscriptionId -ResourceGroup $webapp.resourceGroup -SiteName $SiteName -DDApiKey $DDApiKey -DDSite $DDSite -Username $Username -Password $Password -DDEnv $DDEnv -DDAPM
     }
 }
