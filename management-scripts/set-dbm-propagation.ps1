@@ -13,6 +13,6 @@ Foreach ($webapp in @($allSites)) {
     if ($webapp.kind -eq "app") {
         $SiteName = $webapp.name
         Write-Host "Setting DD_DBM_PROPAGATION_MODE [${SiteName}]"
-        az webapp config appsettings set -n ${SiteName} -g $ResourceGroup --settings DD_DBM_PROPAGATION_MODE=1 | Out-Null
+        az webapp config appsettings set -n ${SiteName} -g $ResourceGroup --settings DD_DBM_PROPAGATION_MODE=full | Out-Null
     }
 }
